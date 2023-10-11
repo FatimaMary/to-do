@@ -1,24 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import "./App.css";
 
-let globalID = 0
+let globalID = 0;
 
 function App() {
-
   const [tasks, setTasks] = useState("");
+  const [owner, setOwner] = useState("");
   const [todos, SetTodos] = useState([]);
 
   function createTodo(event) {
-    event.preventDefault()
-    SetTodos(oldTodos => {
-      setTasks('')
-      return [...oldTodos, {todo: tasks, id: globalID++ }]
-    })
-   
+    event.preventDefault();
+    SetTodos((oldTodos) => {
+      setTasks("");
+      return [...oldTodos, { todo: tasks, id: globalID++ }];
+    });
   }
 
   function deleteItem(itemID) {
-    SetTodos(oldTodos => oldTodos.filter(item => item.id !== itemID))
+    SetTodos((oldTodos) => oldTodos.filter((item) => item.id !== itemID));
   }
 
   return (
@@ -26,18 +25,30 @@ function App() {
       <h1>Create my To do App</h1>
       <form onSubmit={createTodo}>
         <input
-            type="text" 
-            value={tasks} 
-            onChange = {event => {setTasks(event.target.value)}} />
+          type="text"
+          value={tasks}
+          onChange={(event) => {
+            setTasks(event.target.value);
+          }}
+        />
+        <input
+          type="text"
+          value={owner}
+          onChange={(event) => {
+            setOwner(event.target.value);
+          }}
+        />
 
-        <button type='submit'>Create Todo</button>
+        <button type="submit">Create Todo</button>
       </form>
       <ul>
         {todos.map((item, index) => {
-          return <div key={item.id}>
+          return (
+            <div key={item.id}>
               <li>{item.todo}</li>
               <button onClick={() => deleteItem(item.id)}>Delete</button>
             </div>
+          );
         })}
       </ul>
     </div>
