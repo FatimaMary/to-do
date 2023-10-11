@@ -17,15 +17,15 @@ test("adds and deletes a todo", () => {
   userEvent.type(inputElement, "Test Todo");
 
   // Click the "Create Todo" button
-  const createButton = screen.getByText(/Create Todo/i);
+  const createButton = screen.getByText(/create todo/i);
   userEvent.click(createButton);
 
   // Verify that the todo is added to the list
-  const todoElement = screen.getByText(/Test Todo/i);
+  const todoElement = screen.getByText(/test todo/i);
   expect(todoElement).toBeInTheDocument();
 
   // Click the "Delete" button
-  const deleteButton = screen.getByText(/Delete/i);
+  const deleteButton = screen.getByText(/delete/i);
   userEvent.click(deleteButton);
 
   // Verify that the todo is deleted from the list
