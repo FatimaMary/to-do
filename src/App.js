@@ -1,23 +1,45 @@
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 
+let globalID = 0
+
 function App() {
+
+  const [tasks, setTasks] = useState("");
+  const [todos, SetTodos] = useState([]);
+
+  function createTodo(event) {
+    event.preventDefault()
+    SetTodos(oldTodos => {
+      setTasks('')
+      return [...oldTodos, {todo: tasks, id: globalID++ }]
+    })
+   
+  }
+
+  function deleteItem(itemID) {
+    SetTodos(oldTodos => oldTodos.filter(item => item.id !== itemID))
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Create my To do App</h1>
+      <form onSubmit={createTodo}>
+        <input
+            type="text" 
+            value={tasks} 
+            onChange = {event => {setTasks(event.target.value)}} />
+
+        <button type='submit'>Create Todo</button>
+      </form>
+      <ul>
+        {todos.map((item, index) => {
+          return <div key={item.id}>
+              <li>{item.todo}</li>
+              <button onClick={() => deleteItem(item.id)}>Delete</button>
+            </div>
+        })}
+      </ul>
     </div>
   );
 }
