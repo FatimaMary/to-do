@@ -5,23 +5,26 @@ import App from "./App";
 
 test("renders todo app", () => {
   render(<App />);
-  const linkElement = screen.getByText(/Create my To do App/i);
-  expect(linkElement).toBeInTheDocument();
+  const createTodoButton = screen.getByText(/Create my To do App/i);
+  expect(createTodoButton).toBeInTheDocument();
 });
 
-test("adds and deletes a todo", () => {
+test("adds and deletes a todo", async () => {
   render(<App />);
 
-  // Type a todo in the input field
-  const inputElement = screen.getByRole("textbox");
-  userEvent.type(inputElement, "Test Todo");
+  // Type a todo and owner in the input fields
+  const taskInput = screen.getByLabelText(/tasks/i);
+  userEvent.type(taskInput, "Test Todo");
+
+  const ownerInput = screen.getByLabelText(/owner/i);
+  userEvent.type(ownerInput, "Test Owner");
 
   // Click the "Create Todo" button
-  const createButton = screen.getByText(/create todo/i);
-  userEvent.click(createButton);
+  const createTodoButton = screen.getByText(/create todo/i);
+  userEvent.click(createTodoButton);
 
   // Verify that the todo is added to the list
-  const todoElement = screen.getByText(/test todo/i);
+  const todoElement = await screen.findByText(/Test Todo/i);
   expect(todoElement).toBeInTheDocument();
 
   // Click the "Delete" button
