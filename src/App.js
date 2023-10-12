@@ -12,7 +12,8 @@ function App() {
     event.preventDefault();
     SetTodos((oldTodos) => {
       setTasks("");
-      return [...oldTodos, { todo: tasks, id: globalID++ }];
+      setOwner("");
+      return [...oldTodos, { todo: tasks, owner: owner, id: globalID++ }];
     });
   }
 
@@ -26,6 +27,8 @@ function App() {
       <form onSubmit={createTodo}>
         <input
           type="text"
+          id="tasks"
+          aria-label="tasks"
           value={tasks}
           onChange={(event) => {
             setTasks(event.target.value);
@@ -33,6 +36,8 @@ function App() {
         />
         <input
           type="text"
+          id="owner"
+          aria-label="owner"
           value={owner}
           onChange={(event) => {
             setOwner(event.target.value);
@@ -45,7 +50,9 @@ function App() {
         {todos.map((item, index) => {
           return (
             <div key={item.id}>
-              <li>{item.todo}</li>
+              <li>
+                TODO: {item.todo}, Owner: {item.owner}
+              </li>
               <button onClick={() => deleteItem(item.id)}>Delete</button>
             </div>
           );
